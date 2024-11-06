@@ -1,8 +1,30 @@
-import { useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import Header from "./Header";
+import { checkLoginForm, checkSignUpForm } from "../utils/validate";
 
 const Login = () => {
    const [isSignupForm, setIsSignupForm] = useState(false);
+   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+   const emailRef = useRef<HTMLInputElement>(null);
+   const passwordRef = useRef<HTMLInputElement>(null);
+   const nameRef = useRef<HTMLInputElement>(null);
+
+   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const email = emailRef.current?.value || "";
+      const password = passwordRef.current?.value || "";
+      const name = nameRef.current?.value || "";
+      if (!isSignupForm) {
+         const message = checkLoginForm(email, password);
+         setErrorMessage(message);
+         console.log(email, password);
+      } else {
+         const message = checkSignUpForm(email, password, name);
+         setErrorMessage(message);
+         console.log(email, password, name);
+      }
+   };
+
    return (
       <div className=" w-[100vw] h-[100vh] absolute top-0 z-[-2] bg-[url(https://assets.nflxext.com/ffe/siteui/vlv3/151f3e1e-b2c9-4626-afcd-6b39d0b2694f/web/IN-en-20241028-TRIFECTA-perspective_bce9a321-39cb-4cce-8ba6-02dab4c72e53_large.jpg)]">
          <div className="absolute w-[100vw] h-[100vh] z-[-1] bg-black opacity-50"></div>
@@ -12,9 +34,13 @@ const Login = () => {
                <h1 className="text-white text-3xl font-[500]">
                   Sign {isSignupForm ? "Up" : "In"}
                </h1>
-               <div className="flex flex-col gap-5 w-full">
+               <form
+                  className="flex flex-col gap-5 w-full"
+                  onSubmit={handleSubmit}
+               >
                   {isSignupForm && (
                      <input
+                        ref={nameRef}
                         className=" text-white px-3 py-4 rounded-[4px] bg-[#0908086b] border-gray-500 border-[0.5px]"
                         placeholder="Full name"
                      />
@@ -22,11 +48,19 @@ const Login = () => {
                   <input
                      className=" text-white px-3 py-4 rounded-[4px] bg-[#0908086b] border-gray-500 border-[0.5px]"
                      placeholder="Email Address"
+                     ref={emailRef}
                   />
                   <input
                      className=" text-white outline-none px-3 py-4 rounded-[4px] bg-[#0908086b] border-gray-500 border-[0.5px]"
                      placeholder="Password"
+                     type={"password"}
+                     ref={passwordRef}
                   />
+                  {errorMessage && (
+                     <p className="text-[#eb3942] font-medium">
+                        {errorMessage}
+                     </p>
+                  )}
                   <button className="bg-[#e50914] rounded-[4px] text-white px-4 py-2">
                      Sign {isSignupForm ? "Up" : "In"}
                   </button>
@@ -52,7 +86,7 @@ const Login = () => {
                         Sign {isSignupForm ? "in" : "up"} now.
                      </a>
                   </div>
-               </div>
+               </form>
             </div>
          </div>
       </div>

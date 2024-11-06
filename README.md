@@ -2,6 +2,12 @@
 
 -  Initialised react app using vite
 -  Configured tailwind
+-  Header
+-  Routing of App
+-  Login Form
+-  Sign up form
+-  Form Validation
+-  useRef Hook
 
 # Features
 

@@ -1,7 +1,12 @@
 import Body from "./components/Body";
+import FirebaseProvider from "./utils/FirebaseContext";
 
 function App() {
-   return <Body />;
+   return (
+      <FirebaseProvider>
+         <Body />
+      </FirebaseProvider>
+   );
 }
 
 export default App;

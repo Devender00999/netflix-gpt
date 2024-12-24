@@ -13,9 +13,12 @@ import {
    signInWithPopup,
    signOut,
    onAuthStateChanged,
+   updateCurrentUser,
 } from "firebase/auth";
 import { auth } from "./firebase";
 import { GoogleAuthProvider } from "firebase/auth/web-extension";
+import { useDispatch } from "react-redux";
+import { addUser, removeUser } from "./userSlice";
 
 type FirebaseContextType = {
    signupWithEmailPass: (
@@ -26,9 +29,10 @@ type FirebaseContextType = {
       email: string,
       password: string
    ) => Promise<UserCredential>;
-   logout: () => void;
+   logout: () => Promise<void>;
    user: User | null;
    loginWithGoogle: () => void;
+   updateUser: (user: any) => Promise<void>;
 };
 
 export const FirebaseContext = createContext<FirebaseContextType | null>(null);
@@ -40,6 +44,7 @@ export const useFirebase = () => {
 };
 
 const FirebaseProvider = ({ children }: { children: ReactNode }) => {
+   const dispatch = useDispatch();
    const [user, setUser] = useState<User | null>(null);
 
    const signupWithEmailPass = (email: string, password: string) => {
@@ -48,6 +53,9 @@ const FirebaseProvider = ({ children }: { children: ReactNode }) => {
 
    const loginWithEmailPass = (email: string, password: string) => {
       return signInWithEmailAndPassword(auth, email, password);
+   };
+   const updateUser = (user: User) => {
+      return updateCurrentUser(auth, user);
    };
 
    const loginWithGoogle = () => {
@@ -59,7 +67,13 @@ const FirebaseProvider = ({ children }: { children: ReactNode }) => {
 
    useEffect(() => {
       onAuthStateChanged(auth, (user) => {
-         setUser(user);
+         if (user) {
+            const { uid, displayName, email, photoURL } = user;
+            setUser(user);
+            dispatch(addUser({ uid, displayName, email, photoURL }));
+         } else {
+            dispatch(removeUser());
+         }
       });
    }, []);
 
@@ -71,6 +85,7 @@ const FirebaseProvider = ({ children }: { children: ReactNode }) => {
             logout,
             user,
             loginWithGoogle,
+            updateUser,
          }}
       >
          {children}

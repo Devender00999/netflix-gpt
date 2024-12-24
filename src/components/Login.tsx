@@ -2,37 +2,49 @@ import { FormEvent, useRef, useState } from "react";
 import { useFirebase } from "../utils/FirebaseContext";
 import { checkLoginForm } from "../utils/validate";
 import Header from "./Header";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Login = () => {
    const [isSignupForm, setIsSignupForm] = useState(false);
    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+   const user = useSelector((state: any) => state.user);
+
+   const navigate = useNavigate();
+
    const emailRef = useRef<HTMLInputElement>(null);
    const passwordRef = useRef<HTMLInputElement>(null);
    const nameRef = useRef<HTMLInputElement>(null);
-   const { signupWithEmailPass, loginWithEmailPass } = useFirebase();
+   const { signupWithEmailPass, updateUser, loginWithEmailPass } =
+      useFirebase();
 
    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const email = emailRef.current?.value || "";
       const password = passwordRef.current?.value || "";
-      // const name = nameRef.current?.value || "";
+      const name = nameRef.current?.value || "";
       const message = checkLoginForm(email, password);
       setErrorMessage(message);
       if (message) return;
 
       if (!isSignupForm) {
          loginWithEmailPass(email, password)
-            .then((userCredential) => {
-               const user = userCredential.user;
-
-               console.log(user);
+            .then(() => {
+               navigate("/browse");
             })
             .catch((error) => setErrorMessage(error.message));
       } else {
          signupWithEmailPass(email, password)
-            .then((userCredential) => {
-               const user = userCredential.user;
-               console.log(user);
+            .then(() => {
+               updateUser({
+                  displayName: name,
+                  photoURL:
+                     "https://occ-0-2611-3662.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABVsrmU9HCosVLWJev-r2TgDG0YmqgkCzHk4IogCqoezXGqLBTO8WYiEsZzLa7wHfy5kUpS83uFaFJCJvPv-PT8crwDnybkL1fy80.png?r=72e",
+               })
+                  .then(() => {
+                     navigate("/browse");
+                  })
+                  .catch((error) => setErrorMessage(error.message));
             })
             .catch((error) => {
                setErrorMessage(error.message);
@@ -41,6 +53,8 @@ const Login = () => {
          // setErrorMessage(message);
       }
    };
+
+   if (user) return <Navigate to="/browse"></Navigate>;
 
    return (
       <div className=" w-[100vw] h-[100vh] absolute top-0 z-[-2] bg-[url(https://assets.nflxext.com/ffe/siteui/vlv3/151f3e1e-b2c9-4626-afcd-6b39d0b2694f/web/IN-en-20241028-TRIFECTA-perspective_bce9a321-39cb-4cce-8ba6-02dab4c72e53_large.jpg)]">

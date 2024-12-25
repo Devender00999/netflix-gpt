@@ -3,13 +3,16 @@ import { useFirebase } from "../utils/FirebaseContext";
 import { checkLoginForm } from "../utils/validate";
 import Header from "./Header";
 import { Navigate, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser } from "../utils/userSlice";
+import { auth } from "../utils/firebase";
 
 const Login = () => {
    const [isSignupForm, setIsSignupForm] = useState(false);
    const [errorMessage, setErrorMessage] = useState<string | null>(null);
-   const user = useSelector((state: any) => state.user);
 
+   const user = useSelector((state: any) => state.user);
+   const dispatch = useDispatch();
    const navigate = useNavigate();
 
    const emailRef = useRef<HTMLInputElement>(null);
@@ -24,6 +27,7 @@ const Login = () => {
       const password = passwordRef.current?.value || "";
       const name = nameRef.current?.value || "";
       const message = checkLoginForm(email, password);
+
       setErrorMessage(message);
       if (message) return;
 
@@ -42,9 +46,18 @@ const Login = () => {
                      "https://occ-0-2611-3662.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABVsrmU9HCosVLWJev-r2TgDG0YmqgkCzHk4IogCqoezXGqLBTO8WYiEsZzLa7wHfy5kUpS83uFaFJCJvPv-PT8crwDnybkL1fy80.png?r=72e",
                })
                   .then(() => {
-                     navigate("/browse");
+                     if (auth.currentUser) {
+                        const { uid, displayName, email, photoURL } =
+                           auth?.currentUser;
+                        dispatch(
+                           addUser({ uid, displayName, email, photoURL })
+                        );
+                        navigate("/browse");
+                     }
                   })
-                  .catch((error) => setErrorMessage(error.message));
+                  .catch((error) => {
+                     setErrorMessage(error.message);
+                  });
             })
             .catch((error) => {
                setErrorMessage(error.message);

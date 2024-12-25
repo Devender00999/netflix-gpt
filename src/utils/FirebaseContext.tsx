@@ -1,23 +1,16 @@
 import {
-   createContext,
-   ReactNode,
-   useContext,
-   useEffect,
-   useState,
-} from "react";
-import {
-   signInWithEmailAndPassword,
    createUserWithEmailAndPassword,
-   UserCredential,
-   User,
+   onAuthStateChanged,
+   signInWithEmailAndPassword,
    signInWithPopup,
    signOut,
-   onAuthStateChanged,
-   updateCurrentUser,
+   updateProfile,
+   UserCredential,
 } from "firebase/auth";
-import { auth } from "./firebase";
 import { GoogleAuthProvider } from "firebase/auth/web-extension";
+import { createContext, ReactNode, useContext, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { auth } from "./firebase";
 import { addUser, removeUser } from "./userSlice";
 
 type FirebaseContextType = {
@@ -30,9 +23,8 @@ type FirebaseContextType = {
       password: string
    ) => Promise<UserCredential>;
    logout: () => Promise<void>;
-   user: User | null;
    loginWithGoogle: () => void;
-   updateUser: (user: any) => Promise<void>;
+   updateUser: (userDetails: any) => Promise<void>;
 };
 
 export const FirebaseContext = createContext<FirebaseContextType | null>(null);
@@ -45,7 +37,6 @@ export const useFirebase = () => {
 
 const FirebaseProvider = ({ children }: { children: ReactNode }) => {
    const dispatch = useDispatch();
-   const [user, setUser] = useState<User | null>(null);
 
    const signupWithEmailPass = (email: string, password: string) => {
       return createUserWithEmailAndPassword(auth, email, password);
@@ -54,8 +45,12 @@ const FirebaseProvider = ({ children }: { children: ReactNode }) => {
    const loginWithEmailPass = (email: string, password: string) => {
       return signInWithEmailAndPassword(auth, email, password);
    };
-   const updateUser = (user: User) => {
-      return updateCurrentUser(auth, user);
+   const updateUser = (userDetails: {
+      displayName?: string;
+      profilePic?: string;
+   }) => {
+      if (auth.currentUser) return updateProfile(auth.currentUser, userDetails);
+      return Promise.resolve();
    };
 
    const loginWithGoogle = () => {
@@ -69,7 +64,6 @@ const FirebaseProvider = ({ children }: { children: ReactNode }) => {
       onAuthStateChanged(auth, (user) => {
          if (user) {
             const { uid, displayName, email, photoURL } = user;
-            setUser(user);
             dispatch(addUser({ uid, displayName, email, photoURL }));
          } else {
             dispatch(removeUser());
@@ -83,7 +77,6 @@ const FirebaseProvider = ({ children }: { children: ReactNode }) => {
             signupWithEmailPass,
             loginWithEmailPass,
             logout,
-            user,
             loginWithGoogle,
             updateUser,
          }}

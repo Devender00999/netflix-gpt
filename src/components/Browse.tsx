@@ -1,11 +1,8 @@
-import { useSelector } from "react-redux";
+import useNowPlayingMovies from "../hooks/useNowPlayingMovies";
 import Header from "./Header";
-import { Navigate } from "react-router-dom";
 
 const Browse = () => {
-   const user = useSelector((state: any) => state.user);
-
-   if (!user) return <Navigate to="/" />;
+   useNowPlayingMovies();
    return (
       <div>
          <Header />

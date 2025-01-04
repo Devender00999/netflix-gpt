@@ -1,6 +1,5 @@
 import {
    createUserWithEmailAndPassword,
-   onAuthStateChanged,
    signInWithEmailAndPassword,
    signInWithPopup,
    signOut,
@@ -8,10 +7,8 @@ import {
    UserCredential,
 } from "firebase/auth";
 import { GoogleAuthProvider } from "firebase/auth/web-extension";
-import { createContext, ReactNode, useContext, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { createContext, ReactNode, useContext } from "react";
 import { auth } from "./firebase";
-import { addUser, removeUser } from "./userSlice";
 
 type FirebaseContextType = {
    signupWithEmailPass: (
@@ -36,8 +33,6 @@ export const useFirebase = () => {
 };
 
 const FirebaseProvider = ({ children }: { children: ReactNode }) => {
-   const dispatch = useDispatch();
-
    const signupWithEmailPass = (email: string, password: string) => {
       return createUserWithEmailAndPassword(auth, email, password);
    };
@@ -59,17 +54,6 @@ const FirebaseProvider = ({ children }: { children: ReactNode }) => {
    };
 
    const logout = () => signOut(auth);
-
-   useEffect(() => {
-      onAuthStateChanged(auth, (user) => {
-         if (user) {
-            const { uid, displayName, email, photoURL } = user;
-            dispatch(addUser({ uid, displayName, email, photoURL }));
-         } else {
-            dispatch(removeUser());
-         }
-      });
-   }, []);
 
    return (
       <FirebaseContext.Provider

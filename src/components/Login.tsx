@@ -1,11 +1,12 @@
 import { FormEvent, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
+import { USER_AVATAR } from "../utils/constants";
+import { auth } from "../utils/firebase";
 import { useFirebase } from "../utils/FirebaseContext";
+import { addUser } from "../utils/userSlice";
 import { checkLoginForm } from "../utils/validate";
 import Header from "./Header";
-import { Navigate, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { addUser } from "../utils/userSlice";
-import { auth } from "../utils/firebase";
 
 const Login = () => {
    const [isSignupForm, setIsSignupForm] = useState(false);
@@ -13,7 +14,6 @@ const Login = () => {
 
    const user = useSelector((state: any) => state.user);
    const dispatch = useDispatch();
-   const navigate = useNavigate();
 
    const emailRef = useRef<HTMLInputElement>(null);
    const passwordRef = useRef<HTMLInputElement>(null);
@@ -33,9 +33,7 @@ const Login = () => {
 
       if (!isSignupForm) {
          loginWithEmailPass(email, password)
-            .then(() => {
-               navigate("/browse");
-            })
+            .then(() => {})
             .catch((error) => setErrorMessage(error.message));
       } else {
          signupWithEmailPass(email, password)
@@ -43,7 +41,9 @@ const Login = () => {
                updateUser({
                   displayName: name,
                   photoURL:
-                     "https://occ-0-2611-3662.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABVsrmU9HCosVLWJev-r2TgDG0YmqgkCzHk4IogCqoezXGqLBTO8WYiEsZzLa7wHfy5kUpS83uFaFJCJvPv-PT8crwDnybkL1fy80.png?r=72e",
+                     USER_AVATAR[
+                        Math.floor(Math.random() * USER_AVATAR.length)
+                     ],
                })
                   .then(() => {
                      if (auth.currentUser) {
@@ -52,7 +52,6 @@ const Login = () => {
                         dispatch(
                            addUser({ uid, displayName, email, photoURL })
                         );
-                        navigate("/browse");
                      }
                   })
                   .catch((error) => {

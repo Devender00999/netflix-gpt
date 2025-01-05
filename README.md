@@ -18,7 +18,12 @@
 -  Unsubscribed to the onAuthStateChange callback
 -  Added hard coded value in a constants file
 -  Added themoviedb api to get movies
+-  Create movieSlice
 -  Added custom hook to get now playing movies
+-  Update store with movies data
+-  planning for main container and secondary container
+-  fetch data for trailer video data
+-  embeded trailer
 
 # Features
 

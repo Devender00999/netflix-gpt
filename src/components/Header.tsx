@@ -30,7 +30,7 @@ const Header = () => {
    }, []);
 
    return (
-      <div className="px-8 py-2  bg-gradient-to-b from-black flex items-center justify-between">
+      <div className="absolute w-screen px-8 py-2  bg-gradient-to-b from-black flex items-center justify-between z-10">
          <img
             onClick={() => {
                logout();
@@ -50,7 +50,7 @@ const Header = () => {
                }}
             >
                <img src={user.photoURL} className="w-10 h-10 rounded" />
-               (Sign out)
+               <span className="text-white">(Sign out)</span>
             </button>
          )}
       </div>

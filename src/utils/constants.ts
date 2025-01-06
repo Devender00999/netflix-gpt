@@ -14,5 +14,7 @@ export const TMDB_API_OPTIONS = {
    },
 };
 
-export const TMDB_API = "https://api.themoviedb.org/3/movie";
-export const NOW_PLAYING_API = `${TMDB_API}/now_playing?language=en-US&page=1`;
+export const TMDB_API = "https://api.themoviedb.org/3";
+export const TMDB_MOVIE_API = TMDB_API + "/movie";
+export const TMDB_SHOW_API = TMDB_API + "/tv";
+export const TMDB_IMAGE_URL = "https://image.tmdb.org/t/p/original";

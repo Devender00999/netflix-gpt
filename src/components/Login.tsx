@@ -69,10 +69,10 @@ const Login = () => {
    if (user) return <Navigate to="/browse"></Navigate>;
 
    return (
-      <div className=" w-[100vw] h-[100vh] absolute top-0 z-[-2] bg-[url(https://assets.nflxext.com/ffe/siteui/vlv3/151f3e1e-b2c9-4626-afcd-6b39d0b2694f/web/IN-en-20241028-TRIFECTA-perspective_bce9a321-39cb-4cce-8ba6-02dab4c72e53_large.jpg)]">
+      <div className="w-[100vw] h-[100vh] absolute top-0 z-[-2] bg-[url(https://assets.nflxext.com/ffe/siteui/vlv3/151f3e1e-b2c9-4626-afcd-6b39d0b2694f/web/IN-en-20241028-TRIFECTA-perspective_bce9a321-39cb-4cce-8ba6-02dab4c72e53_large.jpg)]">
          <div className="absolute w-[100vw] h-[100vh] z-[-1] bg-black opacity-50"></div>
          <Header />
-         <div className="w-full flex justify-center pt-10">
+         <div className="w-full mt-20 flex justify-center pt-10">
             <div className="bg-[#00000099] w-[450px] flex flex-col gap-7 rounded-md px-[4.25rem] py-14">
                <h1 className="text-white text-3xl font-[500]">
                   Sign {isSignupForm ? "Up" : "In"}

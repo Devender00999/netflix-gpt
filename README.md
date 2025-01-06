@@ -24,6 +24,9 @@
 -  planning for main container and secondary container
 -  fetch data for trailer video data
 -  embeded trailer
+-  TMDB Api to fetch movie details
+-  GPT Search feature
+   -  Added GPT search page container
 
 # Features
 

@@ -7,7 +7,7 @@ import useTrendingAll from "../hooks/useTrendingAll";
 import Header from "./Header";
 import MainContainer from "./MainContainer";
 import SecondaryContainer from "./SecondaryContainer";
-import GPTSearch from "./GPTSearch";
+import GPTSearch from "./GPTSearchPage";
 
 const Browse = () => {
    const showSearchView = useSelector(

@@ -1,7 +1,7 @@
 import { FormEvent, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { USER_AVATAR } from "../utils/constants";
+import { NETFLIX_BG_URL, USER_AVATAR } from "../utils/constants";
 import { auth } from "../utils/firebase";
 import { useFirebase } from "../utils/FirebaseContext";
 import { addUser } from "../utils/userSlice";
@@ -69,7 +69,9 @@ const Login = () => {
    if (user) return <Navigate to="/browse"></Navigate>;
 
    return (
-      <div className="w-[100vw] h-[100vh] absolute top-0 z-[-2] bg-[url(https://assets.nflxext.com/ffe/siteui/vlv3/151f3e1e-b2c9-4626-afcd-6b39d0b2694f/web/IN-en-20241028-TRIFECTA-perspective_bce9a321-39cb-4cce-8ba6-02dab4c72e53_large.jpg)]">
+      <div
+         className={`w-[100vw] h-[100vh] absolute top-0 z-[-2] bg-[url(${NETFLIX_BG_URL})]`}
+      >
          <div className="absolute w-[100vw] h-[100vh] z-[-1] bg-black opacity-50"></div>
          <Header />
          <div className="w-full mt-20 flex justify-center pt-10">

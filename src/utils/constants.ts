@@ -14,7 +14,7 @@ export const TMDB_API_OPTIONS = {
    },
 };
 
-export const NETFLIX_BG_URL = `https://assets.nflxext.com/ffe/siteui/vlv3/151f3e1e-b2c9-4626-afcd-6b39d0b2694f/web/IN-en-20241028-TRIFECTA-perspective_bce9a321-39cb-4cce-8ba6-02dab4c72e53_large.jpg`;
+export const NETFLIX_BG_URL = `https://assets.nflxext.com/ffe/siteui/vlv3/154a9550-ce07-4e28-819c-63185dd849f8/web/IN-en-20250106-TRIFECTA-perspective_27b02e7c-f668-4639-9e82-1a5485084b2a_large.jpg`;
 
 export const TMDB_API = "https://api.themoviedb.org/3";
 export const TMDB_MOVIE_API = TMDB_API + "/movie";

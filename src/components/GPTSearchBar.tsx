@@ -2,9 +2,7 @@ import { useSelector } from "react-redux";
 import lang from "../utils/languageConstants";
 
 const GPTSearchBar = () => {
-   const selectedLanguage = useSelector(
-      (state: any) => state.config.selectedLanguage
-   );
+   const selectedLanguage = useSelector((state: any) => state.config.lang);
    return (
       <div className="pt-[20%] flex justify-center">
          <div className="flex p-3 bg-black rounded-lg gap-7">

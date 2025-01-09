@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Logo from "../assets/logo.png";
-import { selectLanguage } from "../utils/configSlice";
+import { changeLanguage } from "../utils/configSlice";
 import { auth } from "../utils/firebase";
 import { useFirebase } from "../utils/FirebaseContext";
 import { toggleGPTSearchView } from "../utils/gptSlice";
@@ -18,17 +18,14 @@ const Header = () => {
    const navigate = useNavigate();
    const dispatch = useDispatch();
 
-   const selectedLanguage = useSelector(
-      (state: any) => state.config.selectedLanguage
-   );
+   const selectedLanguage = useSelector((state: any) => state.config.lang);
 
    const handleToggleGPTSearch = () => {
       dispatch(toggleGPTSearchView());
    };
 
    const handleChangeLangugage = (e: any) => {
-      console.log(e.target.value);
-      dispatch(selectLanguage(e.target.value));
+      dispatch(changeLanguage(e.target.value));
    };
 
    useEffect(() => {
@@ -77,7 +74,7 @@ const Header = () => {
                   onClick={() => handleToggleGPTSearch()}
                   className="text-white bg-purple-800 py-2 px-4 cursor-pointer rounded"
                >
-                  {showGPTSearch ? "Go to homepage" : "GPT Search"}
+                  {showGPTSearch ? "Homepage" : "GPT Search"}
                </button>
             )}
             {user && (

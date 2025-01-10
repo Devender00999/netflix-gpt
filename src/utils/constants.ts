@@ -20,3 +20,4 @@ export const TMDB_API = "https://api.themoviedb.org/3";
 export const TMDB_MOVIE_API = TMDB_API + "/movie";
 export const TMDB_SHOW_API = TMDB_API + "/tv";
 export const TMDB_IMAGE_URL = "https://image.tmdb.org/t/p/original";
+export const OPEN_AI_API_KEY = import.meta.env.VITE_OPEN_AI_API_KEY;

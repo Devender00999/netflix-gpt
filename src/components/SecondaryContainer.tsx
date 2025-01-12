@@ -6,7 +6,7 @@ const SecondaryContainer = () => {
 
    return (
       <div className="bg-[#141414]">
-         <div className="flex flex-col gap-7 relative -mt-[14%] pb-14">
+         <div className="flex flex-col gap-7 relative md:-mt-[14%] pb-14">
             <MovieList title="Top Searches" movies={movies.trendingAll} />
             <MovieList
                title="Now Playing Movies"

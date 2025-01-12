@@ -5,13 +5,19 @@ console.log(NETFLIX_BG_URL);
 
 const GPTSearch = () => {
    return (
-      <div className={``}>
+      <>
          <div className="fixed -z-10">
-            <img src={NETFLIX_BG_URL} alt="bg" />
+            <img
+               className="h-screen w-screen object-cover"
+               src={NETFLIX_BG_URL}
+               alt="bg"
+            />
          </div>
-         <GPTSearchBar />
-         <GPTMovieSuggestions />
-      </div>
+         <div className={``}>
+            <GPTSearchBar />
+            <GPTMovieSuggestions />
+         </div>
+      </>
    );
 };
 

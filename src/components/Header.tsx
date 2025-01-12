@@ -45,7 +45,7 @@ const Header = () => {
    }, []);
 
    return (
-      <div className="absolute w-screen px-8 py-2  bg-gradient-to-b from-black flex items-center justify-between z-10">
+      <div className="absolute w-screen px-2 md:px-8 py-2  bg-gradient-to-b from-black flex flex-col md:flex-row items-center justify-between z-10">
          <img
             onClick={() => {
                logout();
@@ -55,12 +55,12 @@ const Header = () => {
             src={Logo}
          />
 
-         <div className="flex gap-4 ">
+         <div className="flex gap-4">
             {showGPTSearch && (
                <select
                   defaultValue={selectedLanguage}
                   onChange={handleChangeLangugage}
-                  className="bg-black text-[white] px-3 rounded"
+                  className="bg-black text-[white] w-32 px-3 rounded"
                >
                   {availableLanguages?.map((item) => (
                      <option key={item.langCode} value={item.langCode}>

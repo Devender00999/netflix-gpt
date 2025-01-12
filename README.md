@@ -27,6 +27,12 @@
 -  TMDB Api to fetch movie details
 -  GPT Search feature
    -  Added GPT search page container
+   -  GPT Search API Call
+   -  Fetched GPT movie suggestion from TMDB
+-  Memoisaztion
+-  Showed Suggested Movie
+-  Added Multilinguage support
+-  Made site responsive.
 
 # Features
 

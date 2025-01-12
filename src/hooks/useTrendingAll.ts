@@ -1,10 +1,11 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { TMDB_API, TMDB_API_OPTIONS } from "../utils/constants";
 import { addTrendingAll } from "../utils/moviesSlice";
 
 const useTrendingAll = () => {
    const dispatch = useDispatch();
+   const trendingAll = useSelector((store: any) => store.movies.trendingAll);
 
    const fetchData = async () => {
       const response = await (
@@ -17,7 +18,7 @@ const useTrendingAll = () => {
    };
 
    useEffect(() => {
-      fetchData();
+      trendingAll && fetchData();
    }, []);
 };
 

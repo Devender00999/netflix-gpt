@@ -2,7 +2,6 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Logo from "../assets/logo.png";
 import { changeLanguage } from "../utils/configSlice";
 import { auth } from "../utils/firebase";
 import { useFirebase } from "../utils/FirebaseContext";
@@ -46,14 +45,15 @@ const Header = () => {
 
    return (
       <div className="absolute w-screen px-2 md:px-8 py-2  bg-gradient-to-b from-black flex flex-col md:flex-row items-center justify-between z-10">
-         <img
+         <div
             onClick={() => {
-               logout();
                navigate("/");
             }}
-            className="w-44"
-            src={Logo}
-         />
+            className="w-44 text-3xl p-4 uppercase font-bold text-[#e50914]"
+            // src={Logo}
+         >
+            CineVerse
+         </div>
 
          <div className="flex gap-4">
             {showGPTSearch && (

@@ -124,13 +124,22 @@ const Login = () => {
                   <div className="text-[#ffffffb3] -mt-3">
                      {isSignupForm
                         ? "Already have an account?"
-                        : "New to netflix?"}
+                        : "New to Cineverse?"}
                      <a
                         onClick={() => setIsSignupForm(!isSignupForm)}
                         className="text-center ml-2 cursor-pointer rounded-[4px] text-white py-2"
                      >
                         Sign {isSignupForm ? "in" : "up"} now.
                      </a>
+                  </div>
+                  <div>
+                     <h2 className="text-lg font-semibold text-white mb-4">
+                        Disclaimer
+                     </h2>
+                     <p className="text-sm text-gray-300">
+                        This platform is not affiliated with or endorsed by
+                        Netflix.
+                     </p>
                   </div>
                </form>
             </div>
